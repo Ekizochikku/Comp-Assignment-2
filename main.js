@@ -6,6 +6,7 @@ var bg;
 var caught = 0;
 var pCount = 0;
 var edge = false;
+var loopSpeed = 0;
 
 function Animation(spriteSheet, startX, startY, frameWidth, frameHeight, frameDuration, frames, loop, reverse) {
     this.spriteSheet = spriteSheet;
@@ -102,7 +103,7 @@ Background.prototype.update = function () {
 function Trainer_Left(game, spriteSheet) {
 	this.game = game;
 	this.animation = new Animation(spriteSheet, 0, 32, 32, 32, 0.2, 3, true);
-	this.speed = 150;
+	this.speed = 150 + (loopSpeed * 100);
 	this.ctx = game.ctx;
 	this.boundingbox = new BoundingBox(this.x + 100, this.y + 100, 32, 32);
 	Entity.call(this, game, 300, 405);
@@ -138,7 +139,7 @@ Trainer_Left.prototype.draw = function () {
 function Trainer_Right(game, spriteSheet) {
 	this.game = game;
 	this.animation = new Animation(spriteSheet, 0, 96, 32, 32, 0.2, 3, true);
-	this.speed = 150;
+	this.speed = 150 + (loopSpeed * 100);
 	this.ctx = game.ctx;
 	this.boundingbox = new BoundingBox(this.x + 100, this.y + 100, 32, 32);
 	Entity.call(this, game, 100, 0);
@@ -174,7 +175,7 @@ Trainer_Right.prototype.draw = function () {
 function Trainer_Up(game, spriteSheet) {
 	this.game = game;
 	this.animation = new Animation(spriteSheet, 0, 0, 32, 32, 0.2, 3, true);
-	this.speed = 150;
+	this.speed = 150 + (loopSpeed * 100);
 	this.ctx = game.ctx;
 	this.boundingbox = new BoundingBox(this.x + 100, this.y + 100, 32, 32);
 	Entity.call(this, game, 100, 410);
@@ -200,6 +201,7 @@ Trainer_Up.prototype.update = function() {
     if (this.y < 0) {
     	state = 0;
     	this.y = 410;
+    	loopSpeed += 1;
     }
     this.boundingbox = new BoundingBox(this.x + 5 , this.y + 5 , this.animation.frameWidth - 12 , this.animation.frameHeight - 4);
     Entity.prototype.update.call(this);
@@ -217,7 +219,7 @@ Trainer_Up.prototype.draw = function () {
 function Trainer_Down(game, spriteSheet) {
 	this.game = game;
 	this.animation = new Animation(spriteSheet, 0, 64, 32, 32, 0.2, 3, true);
-	this.speed = 150;
+	this.speed = 150 + (loopSpeed * 100);
 	this.ctx = game.ctx;
 	this.boundingbox = new BoundingBox(this.x + 100, this.y + 100, 32, 32);
 	Entity.call(this, game, 300, 0);
