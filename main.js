@@ -366,6 +366,27 @@ Pikachu_Spawner.prototype.draw = function() {
 	}
 }
 
+function Score(game, color, x, y) {
+	this.color = color;
+	this.x = x;
+	this.y = y;
+	this.ctx = game.ctx;
+	this.ctx.font = "19px Arial";
+	this.ctx.fillStyle = color;
+	this.ctx.fillText("SCORE: " + this.score, this.x, this.y);
+	Entity.call(this, game, x, y);
+}
+
+//Score.prototype = new Entity();
+Score.prototype.constructor = Score;
+Score.prototype.update = function() {
+	//Entity.prototype.update.call(this);
+};
+Score.prototype.draw = function() {
+	if (caught != 1000) return;
+	this.ctx.fillText("Pikachu has overrun you. Can't Catch Them All", this.x, this.y);
+};
+
 AM.queueDownload("./img/Trainer.png");
 AM.queueDownload("./img/Pikachu_Left.png");
 AM.queueDownload("./img/Pikachu_Right.png");
@@ -381,6 +402,7 @@ AM.downloadAll(function () {
 	
 	bg = new Background(gameEngine, AM.getAsset("./img/background.jpg"));
 	gameEngine.addEntity(bg);
+	gameEngine.addEntity(new Score(gameEngine, "yellow", 30, 230));
 	gameEngine.bg = bg;
 	
 //	var tUp = new Trainer_Up(gameEngine, AM.getAsset("./img/Trainer.png"));
